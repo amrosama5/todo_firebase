@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       initialRoute: Home.routeName,
       routes: {
         Home.routeName: (context) =>  const Home(),
-        EditScreen.routeName: (context) =>   const EditScreen(),
+        EditScreen.routeName: (context) =>    EditScreen(),
       },
     );
   }

@@ -51,7 +51,7 @@ class  MyThemeData{
         titleTextStyle: GoogleFonts.poppins(fontWeight: FontWeight.bold,fontSize: 30),
         elevation: 0,
         iconTheme: const IconThemeData(
-            color: Colors.black
+            color: Colors.white
         )
     ),
     colorScheme: ColorScheme.fromSeed(seedColor: secondColor),
