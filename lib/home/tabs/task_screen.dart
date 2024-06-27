@@ -22,7 +22,7 @@ class _TaskScreenState extends State<TaskScreen> {
     return Column(
       children: [
         DatePicker(
-          height: MediaQuery.of(context).size.height * 0.11,
+          height: MediaQuery.of(context).size.height * 0.14,
           DateTime.now(),
           initialSelectedDate: dateTime,
           selectionColor: MyThemeData.secondColor,
@@ -43,7 +43,7 @@ class _TaskScreenState extends State<TaskScreen> {
                 return const Center(child: CircularProgressIndicator());
               }
               if(snapshot.hasError){
-                return const Center(child: Text("Erorr"));
+                return const Center(child: Text("Error"));
               }
               var tasks = snapshot.data?.docs.map((e) => e.data()).toList();
               if(tasks!.isEmpty){

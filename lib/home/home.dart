@@ -50,7 +50,6 @@ class _HomeState extends State<Home> {
         shape: const CircularNotchedRectangle(),
         notchMargin: 8,
         padding: EdgeInsets.zero,
-        height: MediaQuery.of(context).size.height*0.07,
         child: BottomNavigationBar(
           backgroundColor: Colors.transparent,
           elevation: 0,

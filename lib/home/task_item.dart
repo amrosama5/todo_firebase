@@ -30,6 +30,7 @@ class _TaskItemState extends State<TaskItem> {
               FirebaseFunction.deleteTask(widget.taskModel.id ?? "");
             },
             label: "Delete",
+            flex: 1,
             backgroundColor: Colors.red,
             autoClose: true,
             icon: Icons.delete_forever,
@@ -37,6 +38,9 @@ class _TaskItemState extends State<TaskItem> {
             borderRadius: const BorderRadius.only(
                 bottomLeft: Radius.circular(12), topLeft: Radius.circular(12)),
           ),
+        ],
+        ),
+        endActionPane: ActionPane(motion: const DrawerMotion(),children: [
           SlidableAction(
             onPressed: (context) {
               Navigator.pushNamed(context, EditScreen.routeName,arguments: widget.taskModel);
@@ -49,8 +53,8 @@ class _TaskItemState extends State<TaskItem> {
             borderRadius: const BorderRadius.only(
                 bottomRight: Radius.circular(12),
                 topRight: Radius.circular(12)),
-          )
-        ]),
+          ),
+        ],),
         child: Container(
           padding: const EdgeInsets.all(12),
           child: Row(
@@ -61,7 +65,7 @@ class _TaskItemState extends State<TaskItem> {
                   height: 80,
                   width: 5,
                   decoration: BoxDecoration(
-                      color: MyThemeData.secondColor,
+                      color: widget.taskModel.isDone != true ? MyThemeData.secondColor : Colors.green,
                       borderRadius: BorderRadius.circular(12)),
                 ),
               ),
@@ -75,7 +79,8 @@ class _TaskItemState extends State<TaskItem> {
                     Text(widget.taskModel.title ?? "",
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.bodyMedium),
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: widget.taskModel.isDone != true ?MyThemeData.secondColor : Colors.green)
+                    ),
                     const SizedBox(
                       height: 10,
                     ),
