@@ -54,7 +54,7 @@ class  MyThemeData{
             color: Colors.white
         )
     ),
-    colorScheme: ColorScheme.fromSeed(seedColor: secondColor),
+    colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
     useMaterial3: true,
   );
 

@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_app_firebase/MyThemeData.dart';
 import 'package:todo_app_firebase/home/home.dart';
+import 'Auth/auth.dart';
 import 'firebase_options.dart';
 import 'home/edit_screen.dart';
 
@@ -24,10 +25,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: MyThemeData.lightTheme,
       themeMode: ThemeMode.light,
-      initialRoute: Home.routeName,
+      initialRoute: Auth.routeName,
       routes: {
         Home.routeName: (context) =>  const Home(),
         EditScreen.routeName: (context) =>    EditScreen(),
+        Auth.routeName: (context) =>    const Auth(),
       },
     );
   }

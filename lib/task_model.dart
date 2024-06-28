@@ -1,4 +1,5 @@
 class TaskModel {
+  static const String collectionName="Tasks";
   late String id;
   late String title;
   late String description;

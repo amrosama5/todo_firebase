@@ -3,9 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_app_firebase/task_model.dart';
 
+import '../user_model.dart';
+
 class FirebaseFunction{
+
+
   static CollectionReference<TaskModel> getTaskCollection() {
-   return FirebaseFirestore.instance.collection("Tasks").withConverter<TaskModel>(
+   return FirebaseFirestore.instance.collection(TaskModel.collectionName).withConverter<TaskModel>(
        fromFirestore: (snapshot, _) {
          return TaskModel.fromJson(snapshot.data()!);
        },
@@ -15,6 +19,24 @@ class FirebaseFunction{
    );
  }
 
+
+  static CollectionReference<UserModel> getUserCollection() {
+    return FirebaseFirestore.instance.collection(UserModel.collectionName).withConverter<UserModel>(
+      fromFirestore: (snapshot, _) {
+        return UserModel.fromJson(snapshot.data()!);
+      },
+      toFirestore: (userModel, _) {
+        return userModel.toJson();
+      },
+    );
+  }
+
+  static Future<void> addUser(UserModel userModel){
+    var collection = getUserCollection();
+    var docRef = collection.doc();
+    userModel.id = docRef.id;
+    return docRef.set(userModel);
+  }
 
   static Future<void> addTask(TaskModel taskModel){
     var collection = getTaskCollection();
@@ -38,20 +60,62 @@ class FirebaseFunction{
  }
 
 
- static void createAccount(String emailAddress,String password) async {
+ static void createAccount({
+   required String emailAddress,
+   required String password,
+   required String name,
+   required String phone,
+   required Function onError,
+   required Function onSuccess,
+ }) async {
    try {
      final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
        email: emailAddress,
        password: password,
      );
+
+     addUser(UserModel(
+         id: credential.user!.uid,
+         name: name,
+         phone: phone,
+         email: emailAddress,
+         )).then((e){
+       onSuccess();
+     });
+
    } on FirebaseAuthException catch (e) {
      if (e.code == 'weak-password') {
-       print('The password provided is too weak.');
+       onError('weak-password');
      } else if (e.code == 'email-already-in-use') {
-       print('The account already exists for that email.');
+       onError('The account already exists for that email.');
      }
    } catch (e) {
-     print(e);
+     onError(e.toString());
+   }
+ }
+
+
+static loginUser({
+    required emailAddress,
+   required password,
+   required Function onSuccess,
+   required Function onError,
+})async{
+   try {
+     final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+         email: emailAddress,
+         password: password
+     ).then((e){
+       onSuccess();
+     });
+   } on FirebaseAuthException catch (e) {
+     if (e.code == 'user-not-found') {
+       onError('No user found for that email.');
+     } else if (e.code == 'wrong-password') {
+       onError('Wrong password provided for that user.');
+     }
+   }catch(e){
+     onError(e.toString());
    }
  }
 }
