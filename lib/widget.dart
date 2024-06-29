@@ -45,7 +45,7 @@ Widget customButton({required text, required onPressed}) {
     child: ElevatedButton(
         style: ElevatedButton.styleFrom(backgroundColor: MyThemeData.secondColor),
         onPressed: onPressed,
-        child: Text(text,style: TextStyle(color: Colors.white),),
+        child: Text(text,style: const TextStyle(color: Colors.white),),
     ),
   );
 }

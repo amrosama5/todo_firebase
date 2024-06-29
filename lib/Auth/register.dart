@@ -93,10 +93,10 @@ class Register extends StatelessWidget {
                          name: nameController.text,
                          phone: phoneController.text,
                          onError: (error){
-                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error)));
+                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error),backgroundColor: Colors.red,));
                          },
                          onSuccess: (){
-                         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Done")));
+                         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Done"),backgroundColor: Colors.green,));
                        }
                      );
                     }

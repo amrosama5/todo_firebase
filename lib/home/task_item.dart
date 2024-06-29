@@ -4,6 +4,7 @@ import 'package:todo_app_firebase/MyThemeData.dart';
 import 'package:todo_app_firebase/firebase/firebase_function.dart';
 import 'package:todo_app_firebase/home/edit_screen.dart';
 import 'package:todo_app_firebase/task_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class TaskItem extends StatefulWidget {
   TaskModel taskModel;

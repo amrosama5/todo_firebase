@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app_firebase/MyThemeData.dart';
+import 'package:todo_app_firebase/firebase/firebase_function.dart';
 import 'package:todo_app_firebase/home/add_task-bottom_sheet.dart';
 import 'package:todo_app_firebase/home/tabs/settings_screen.dart';
 import 'package:todo_app_firebase/home/tabs/task_screen.dart';
+import 'package:todo_app_firebase/provider/my_provider.dart';
+import 'package:provider/provider.dart';
 
+import '../Auth/auth.dart';
 class Home extends StatefulWidget {
   const Home({super.key});
   static const String routeName = "/home";
@@ -16,12 +21,19 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    var provider=Provider.of<MyProvider>(context);
     return Scaffold(
       extendBody: true,
       appBar: AppBar(
         centerTitle: false,
+        actions: [
+          IconButton(onPressed: (){
+            FirebaseFunction.logoutUser();
+            Navigator.pushNamedAndRemoveUntil(context, Auth.routeName, (route) => false,);
+          }, icon: const Icon(Icons.logout_outlined))
+        ],
         title: Text(
-          "To do List",
+          "To do List ,Hello ${provider.userModel?.name.toUpperCase()}",
           style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white),
         ),
         backgroundColor: const Color(0xff5D9CEC),
@@ -39,11 +51,12 @@ class _HomeState extends State<Home> {
         },
         shape: RoundedRectangleBorder(
           side: const BorderSide(
-            width: 3,
+            width: 4,
             color: Colors.white
           ),
             borderRadius: BorderRadius.circular(30)
         ),
+        backgroundColor: MyThemeData.primaryColor,
         child: const Icon(Icons.add),
       ),
       bottomNavigationBar: BottomAppBar(

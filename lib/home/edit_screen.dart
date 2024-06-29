@@ -1,13 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_app_firebase/firebase/firebase_function.dart';
 import 'package:todo_app_firebase/task_model.dart';
-
-import '../MyThemeData.dart';
-
+import 'package:todo_app_firebase/widget.dart';
 class EditScreen extends StatefulWidget {
   static const String routeName = "edit screen";
-  EditScreen({super.key});
+  const EditScreen({super.key});
 
   @override
   State<EditScreen> createState() => _EditScreenState();
@@ -16,6 +13,7 @@ class EditScreen extends StatefulWidget {
 class _EditScreenState extends State<EditScreen> {
   var titleController = TextEditingController();
   var descController = TextEditingController();
+  var formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     var taskModel = ModalRoute.of(context)!.settings.arguments as TaskModel;
@@ -32,75 +30,65 @@ class _EditScreenState extends State<EditScreen> {
         ),
       ),
       body: Center(
-        child: Card(
-          color: Colors.white,
-          child: Container(
-            padding: EdgeInsets.all(16),
-            height: MediaQuery.of(context).size.height * 0.8,
-            width: MediaQuery.of(context).size.width * 0.9,
-            child: Column(
-              children: [
-                const Text("Edit Task"),
-                const Spacer(),
-                TextFormField(
-                  controller: titleController,
-                  decoration: InputDecoration(
-                    label: Text(
-                      "Title",
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyMedium!
-                          .copyWith(color: Colors.black),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12)),
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide:
-                            const BorderSide(color: MyThemeData.secondColor)),
+        child: Form(
+          key: formKey,
+          child: Card(
+            color: Colors.white,
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              height: MediaQuery.of(context).size.height * 0.8,
+              width: MediaQuery.of(context).size.width * 0.9,
+              child: Column(
+                children: [
+                  const Text("Edit Task"),
+                  const Spacer(),
+                  customTextField(
+                      controller: titleController,
+                      keyboardType: TextInputType.text,
+                      context: context,
+                      label: "Title",
+                      validator: (value){
+                        if(titleController.text.isEmpty){
+                          return 'Title must not be empty';
+                        }
+                      }
                   ),
-                ),
-                const Spacer(),
-                TextFormField(
-                  controller: descController,
-                  decoration: InputDecoration(
-                    label: Text(
-                      "Description",
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyMedium!
-                          .copyWith(color: Colors.black),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12)),
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide:
-                            const BorderSide(color: MyThemeData.secondColor)),
+                  const Spacer(),
+                  customTextField(
+                      controller: descController,
+                      keyboardType: TextInputType.multiline,
+                      context: context,
+                      label: "Description",
+                      validator: (value){
+                        if(descController.text.isEmpty){
+                          return 'description must not be empty';
+                        }
+                      }
                   ),
-                ),
-                const Spacer(),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: MyThemeData.secondColor),
-                      onPressed: () {
+                  const Spacer(),
+                  customButton(
+                    text: "Edit Task",
+                    onPressed: () {
+                      if(formKey.currentState!.validate()){
                         taskModel.title = titleController.text;
-                        taskModel.description= descController.text;
-                        FirebaseFunction.updateTask(taskModel).then((e){
-                          FocusScope.of(context).unfocus();
-                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                            content: Text('Done Edited'),
-                            backgroundColor: Colors.green,
-                          ));
-                        });
-                      },
-                      child: const Text("Edit Task",
-                          style: TextStyle(color: Colors.white))),
-                ),
-                const Spacer(),
-              ],
+                        taskModel.description = descController.text;
+                        FirebaseFunction.updateTask(taskModel).then((e)
+                        {
+                            FocusScope.of(context).unfocus();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Done Edited'),
+                                backgroundColor: Colors.green,
+                              ),
+                            );
+                          },
+                        );
+                      }
+                    },
+                  ),
+                  const Spacer(),
+                ],
+              ),
             ),
           ),
         ),
