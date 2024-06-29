@@ -94,7 +94,6 @@ class FirebaseFunction{
       )).then((v){
         onSuccess();
       });
-      print(credential.user?.uid);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         onError('weak-password');

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:todo_app_firebase/MyThemeData.dart';
+import 'package:todo_app_firebase/my_theme_data.dart';
 import 'package:todo_app_firebase/firebase/firebase_function.dart';
 import 'package:todo_app_firebase/home/edit_screen.dart';
 import 'package:todo_app_firebase/task_model.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class TaskItem extends StatefulWidget {
-  TaskModel taskModel;
-  TaskItem({required this.taskModel, super.key});
+  final TaskModel taskModel;
+  const TaskItem({required this.taskModel, super.key});
 
   @override
   State<TaskItem> createState() => _TaskItemState();
@@ -28,7 +27,7 @@ class _TaskItemState extends State<TaskItem> {
         startActionPane: ActionPane(motion: const DrawerMotion(), children: [
           SlidableAction(
             onPressed: (context) {
-              FirebaseFunction.deleteTask(widget.taskModel.id ?? "");
+              FirebaseFunction.deleteTask(widget.taskModel.id);
             },
             label: "Delete",
             flex: 1,
@@ -77,7 +76,7 @@ class _TaskItemState extends State<TaskItem> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(widget.taskModel.title ?? "",
+                    Text(widget.taskModel.title,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: widget.taskModel.isDone != true ?MyThemeData.secondColor : Colors.green)
@@ -85,7 +84,7 @@ class _TaskItemState extends State<TaskItem> {
                     const SizedBox(
                       height: 10,
                     ),
-                    Text(widget.taskModel.description ?? "",
+                    Text(widget.taskModel.description,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.bodySmall),

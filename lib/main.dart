@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:todo_app_firebase/MyThemeData.dart';
+import 'package:todo_app_firebase/my_theme_data.dart';
 import 'package:todo_app_firebase/home/home.dart';
 import 'package:todo_app_firebase/provider/my_provider.dart';
 import 'Auth/auth.dart';
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       initialRoute: provider.firebaseUser != null ? Home.routeName : Auth.routeName,
       routes: {
         Home.routeName: (context) => const Home(),
-        EditScreen.routeName: (context) => EditScreen(),
+        EditScreen.routeName: (context) => const EditScreen(),
         Auth.routeName: (context) => const Auth(),
       },
     );

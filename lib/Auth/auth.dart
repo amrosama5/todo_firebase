@@ -12,8 +12,8 @@ class Auth extends StatelessWidget {
      length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Todo App"),
-          bottom: TabBar(
+          title: const Text("Todo App"),
+          bottom: const TabBar(
             indicatorColor: Colors.white,
             tabs: [
               Text("Login",style: TextStyle(color: Colors.white,fontSize: 22),),

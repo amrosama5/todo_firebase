@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app_firebase/MyThemeData.dart';
+import 'package:todo_app_firebase/my_theme_data.dart';
 import 'package:todo_app_firebase/firebase/firebase_function.dart';
-import 'package:todo_app_firebase/home/add_task-bottom_sheet.dart';
+import 'package:todo_app_firebase/home/add_task_bottom_sheet.dart';
 import 'package:todo_app_firebase/home/tabs/settings_screen.dart';
 import 'package:todo_app_firebase/home/tabs/task_screen.dart';
 import 'package:todo_app_firebase/provider/my_provider.dart';
@@ -46,7 +46,7 @@ class _HomeState extends State<Home> {
             isScrollControlled: true,
             builder: (context)
           {
-            return const AddTaskbottomSheet();
+            return const AddTaskBottomSheet();
           },);
         },
         shape: RoundedRectangleBorder(

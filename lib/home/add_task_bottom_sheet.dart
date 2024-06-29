@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app_firebase/MyThemeData.dart';
 import 'package:todo_app_firebase/firebase/firebase_function.dart';
 import 'package:todo_app_firebase/task_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:todo_app_firebase/widget.dart';
 
-class AddTaskbottomSheet extends StatefulWidget {
-  const AddTaskbottomSheet({super.key});
+class AddTaskBottomSheet extends StatefulWidget {
+  const AddTaskBottomSheet({super.key});
 
   @override
-  State<AddTaskbottomSheet> createState() => _AddTaskbottomSheetState();
+  State<AddTaskBottomSheet> createState() => _AddTaskBottomSheetState();
 }
 
-class _AddTaskbottomSheetState extends State<AddTaskbottomSheet> {
+class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
   DateTime dateTime = DateTime.now();
   var titleController = TextEditingController();
   var descController = TextEditingController();
@@ -20,7 +19,8 @@ class _AddTaskbottomSheetState extends State<AddTaskbottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      padding:
+          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
