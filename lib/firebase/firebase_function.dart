@@ -85,8 +85,8 @@ class FirebaseFunction{
         email: emailAddress,
         password: password,
       );
-
-      addUser(UserModel(
+      await credential.user!.sendEmailVerification();
+      await addUser(UserModel(
           id: credential.user?.uid??"",
           name: name,
           phone: phone,

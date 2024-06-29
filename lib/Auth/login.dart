@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app_firebase/firebase/firebase_function.dart';
@@ -65,18 +66,23 @@ class Login extends StatelessWidget {
             ),
             customButton(
               onPressed: (){
-                if(formKey.currentState!.validate()){
-                   FirebaseFunction.loginUser(
-                      emailAddress: emailController.text,
-                      password: passwordController.text,
-                    onSuccess: (){
-                        provider.initUser();
-                        Navigator.pushNamedAndRemoveUntil(context, Home.routeName, (route) => false);
-                    },
-                    onError: (error){
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error),backgroundColor: Colors.red,));
-                    }
-                  );
+                if(formKey.currentState!.validate())
+                {
+                    FirebaseFunction.loginUser(
+                        emailAddress: emailController.text,
+                        password: passwordController.text,
+                        onSuccess: (){
+                          if(FirebaseAuth.instance.currentUser?.emailVerified == true){
+                            provider.initUser();
+                            Navigator.pushNamedAndRemoveUntil(context, Home.routeName, (route) => false);
+                          }else{
+                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please Verfiy your email',style: TextStyle(color: Colors.black),),backgroundColor: Colors.yellow,));
+                          }
+                        },
+                        onError: (error){
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error),backgroundColor: Colors.red,));
+                        }
+                    );
                 }
               },
               text: "Login"
