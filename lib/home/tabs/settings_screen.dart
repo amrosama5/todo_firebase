@@ -11,65 +11,75 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  bool val=false;
-  bool val2=false;
   @override
   Widget build(BuildContext context) {
-
     var pro = Provider.of<MyProvider>(context);
-    return ChangeNotifierProvider(
-      create: (context) => MyProvider(),
-      child: Scaffold(
-        body:  SizedBox(
-          width: double.infinity,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children:
-            [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children:
-                [
-                  Text(AppLocalizations.of(context)!.theme,textAlign: TextAlign.center,style: TextStyle(color: pro.theme==ThemeMode.light ? Colors.black :Colors.white),),
-                  const SizedBox(
-                    height: 30,
+
+    bool val = pro.theme == ThemeMode.light ? false : true;
+    bool val2 = pro.langCode == "en" ? false : true;
+
+    return Scaffold(
+      body: SizedBox(
+        width: double.infinity,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  AppLocalizations.of(context)!.theme,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: pro.theme == ThemeMode.light ? Colors.black : Colors.white,
                   ),
-                  Text(AppLocalizations.of(context)!.language,textAlign: TextAlign.center,style: TextStyle(color: pro.theme==ThemeMode.light ? Colors.black :Colors.white),),
-                ],
-              ),
-              const SizedBox(
-                width: 40,
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Switch(
-                      value: val, onChanged: (e){
-                        setState(() {
-                          val = e;
-                          if(val){
-                            pro.changeTheme(ThemeMode.dark);
-                          }else{
-                            pro.changeTheme(ThemeMode.light);
-                          }
-                        });
-                  }),
-                  Switch(
-                      value: val2, onChanged: (e){
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Text(
+                  AppLocalizations.of(context)!.language,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: pro.theme == ThemeMode.light ? Colors.black : Colors.white,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              width: 40,
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Switch(
+                  value: val,
+                  onChanged: (e) {
                     setState(() {
-                      val2 = e;
-                      if(val2){
+                      if (e) {
+                        pro.changeTheme(ThemeMode.dark);
+                      } else {
+                        pro.changeTheme(ThemeMode.light);
+                      }
+                    });
+                  },
+                ),
+                Switch(
+                  value: val2,
+                  onChanged: (e) {
+                    setState(() {
+                      if (e) {
                         pro.changeLanguageCode("ar");
-                      }else{
+                      } else {
                         pro.changeLanguageCode("en");
                       }
                     });
-                  }),
-                ],
-              ),
-            ],
-          ),
+                  },
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );

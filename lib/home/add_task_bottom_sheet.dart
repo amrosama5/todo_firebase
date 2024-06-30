@@ -96,7 +96,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                   height: 26,
                 ),
                 customButton(
-                  text: AppLocalizations.of(context)!,
+                  text: AppLocalizations.of(context)!.description,
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
                       FirebaseFunction.addTask(
