@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app_firebase/Auth/login.dart';
-import 'package:todo_app_firebase/Auth/register.dart';
+import 'package:todo_app_firebase/auth_screen/register.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import 'login.dart';
 
 class Auth extends StatelessWidget {
   static const String routeName= "Auth";
@@ -12,12 +14,12 @@ class Auth extends StatelessWidget {
      length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Todo App"),
-          bottom: const TabBar(
+          title:  Text(AppLocalizations.of(context)!.appName),
+          bottom:  TabBar(
             indicatorColor: Colors.white,
             tabs: [
-              Text("Login",style: TextStyle(color: Colors.white,fontSize: 22),),
-              Text("Register",style: TextStyle(color: Colors.white,fontSize: 22),),
+              Text(AppLocalizations.of(context)!.login,style: const TextStyle(color: Colors.white,fontSize: 22),),
+              Text(AppLocalizations.of(context)!.register,style: const TextStyle(color: Colors.white,fontSize: 22),),
             ],
           ),
         ),

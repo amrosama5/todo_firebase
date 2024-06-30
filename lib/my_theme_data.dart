@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:todo_app_firebase/provider/my_provider.dart';
 class  MyThemeData{
   static const Color primaryColor=Color(0xffDFECDB);
-  static const Color secondColor=Color(0xff5D9CEC);
   static const Color primaryDarkColor=Color(0xff060E1E);
+  static const Color secondColor=Color(0xff5D9CEC);
+  static const Color secondDarkColor=Color(0xff5D9CEC);
   static ThemeData lightTheme = ThemeData(
     textTheme: TextTheme(
       bodyLarge: GoogleFonts.poppins(
@@ -14,7 +16,7 @@ class  MyThemeData{
       bodyMedium: GoogleFonts.poppins(
           fontWeight: FontWeight.w600,
           fontSize: 20,
-          color: secondColor
+          color: Colors.black
       ),
       bodySmall:  GoogleFonts.poppins(
           fontWeight: FontWeight.w400,
@@ -24,7 +26,7 @@ class  MyThemeData{
       displayMedium: GoogleFonts.poppins(
           fontWeight: FontWeight.bold,
           fontSize: 25,
-          color: primaryColor
+          color: Colors.white
       ),
       displaySmall: GoogleFonts.poppins(
           fontWeight: FontWeight.bold,
@@ -43,7 +45,7 @@ class  MyThemeData{
       showSelectedLabels: false,
       showUnselectedLabels: false,
       type: BottomNavigationBarType.fixed,
-      backgroundColor: secondColor,
+      backgroundColor: Colors.transparent,
     ),
     appBarTheme: AppBarTheme(
         backgroundColor: secondColor,
@@ -69,7 +71,7 @@ class  MyThemeData{
       displayMedium: GoogleFonts.poppins(
           fontWeight: FontWeight.bold,
           fontSize: 25,
-          color: primaryDarkColor
+          color: Colors.white
       ),
       displaySmall: GoogleFonts.poppins(
           fontWeight: FontWeight.bold,
@@ -92,25 +94,25 @@ class  MyThemeData{
           color: Colors.white
       ),
     ),
-    scaffoldBackgroundColor: Colors.transparent,
+    scaffoldBackgroundColor: primaryDarkColor,
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-      selectedItemColor: Color(0xffFACC1D),
-      unselectedItemColor: Colors.white,
+      selectedItemColor: secondDarkColor,
+      unselectedItemColor: Colors.grey,
       showSelectedLabels: false,
       showUnselectedLabels: false,
       type: BottomNavigationBarType.fixed,
-      backgroundColor: Color(0xff141A2E),
+      backgroundColor: Colors.transparent,
     ),
     appBarTheme: AppBarTheme(
-        backgroundColor: Colors.transparent,
+        backgroundColor: secondDarkColor,
         centerTitle: true,
         titleTextStyle: GoogleFonts.poppins(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.white),
         elevation: 0,
-        iconTheme: const IconThemeData(
-            color: Colors.white
+        iconTheme:  IconThemeData(
+            color: MyProvider().theme == ThemeMode.light ? Colors.white : Colors.black
         )
     ),
-    colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xffDFECDB)),
+    colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
     useMaterial3: true,
   );
 }

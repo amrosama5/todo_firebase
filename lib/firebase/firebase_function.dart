@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:todo_app_firebase/task_model.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:todo_app_firebase/models/task_model.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../user_model.dart';
+import '../models/user_model.dart';
 
 class FirebaseFunction{
 
@@ -79,6 +82,7 @@ class FirebaseFunction{
     required String phone,
     required Function onError,
     required Function onSuccess,
+    required context
   }) async {
     try {
       final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -96,12 +100,12 @@ class FirebaseFunction{
       });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        onError('weak-password');
+        onError(AppLocalizations.of(context)!.weakPassword);
       } else if (e.code == 'email-already-in-use') {
-        onError('The account already exists for that email.');
+        onError(AppLocalizations.of(context)!.emailAlreadyInUse);
       }
     } catch (e) {
-      onError('something went wrong');
+      onError(AppLocalizations.of(context)!.somethingWentWrong);
     }
   }
 
@@ -111,6 +115,7 @@ class FirebaseFunction{
     required password,
     required Function onSuccess,
     required Function onError,
+    required context
   })async{
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -121,14 +126,14 @@ class FirebaseFunction{
       });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        onError('No user found for that email.');
+        onError(AppLocalizations.of(context)!.userNotFound);
       } else if (e.code == 'wrong-password') {
-        onError('Wrong password provided for that user.');
+        onError(AppLocalizations.of(context)!.wrongPassword);
       }else{
-        onError('Error');
+        onError(AppLocalizations.of(context)!.error);
       }
     }catch(e){
-      onError('something went wrong');
+      onError(AppLocalizations.of(context)!.somethingWentWrong);
     }
   }
 
@@ -146,5 +151,42 @@ class FirebaseFunction{
        .doc(FirebaseAuth.instance.currentUser!.uid).get();
    return documentSnapshot.data();
  }
+
+
+
+ /// social auth
+///
+///
+
+
+  static Future<UserCredential> signInWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    // Once signed in, return the UserCredential
+    return await FirebaseAuth.instance.signInWithCredential(credential);
+  }
+
+
+  static Future<UserCredential> signInWithFacebook() async {
+    // Trigger the sign-in flow
+    final LoginResult loginResult = await FacebookAuth.instance.login();
+
+    // Create a credential from the access token
+    final OAuthCredential facebookAuthCredential = FacebookAuthProvider.credential(loginResult.accessToken!.tokenString);
+
+    // Once signed in, return the UserCredential
+    return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+  }
+
 
 }

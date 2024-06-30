@@ -6,8 +6,9 @@ import 'package:todo_app_firebase/home/tabs/settings_screen.dart';
 import 'package:todo_app_firebase/home/tabs/task_screen.dart';
 import 'package:todo_app_firebase/provider/my_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../Auth/auth.dart';
+import '../auth_screen/auth.dart';
 class Home extends StatefulWidget {
   const Home({super.key});
   static const String routeName = "/home";
@@ -18,7 +19,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int index=0;
-
+  ///https://todo-app-fa213.firebaseapp.com/__/auth/handler
   @override
   Widget build(BuildContext context) {
     var provider=Provider.of<MyProvider>(context);
@@ -33,10 +34,9 @@ class _HomeState extends State<Home> {
           }, icon: const Icon(Icons.logout_outlined))
         ],
         title: Text(
-          "To do List ,Hello ${provider.userModel?.name.toUpperCase()}",
-          style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white),
+          "${AppLocalizations.of(context)!.appbarName} , ${AppLocalizations.of(context)!.hello} ${provider.userModel?.name.toUpperCase()}",
+          style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: provider.theme == ThemeMode.light ? Colors.white : const Color(0xff141922),fontSize: 16),
         ),
-        backgroundColor: const Color(0xff5D9CEC),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
@@ -44,27 +44,28 @@ class _HomeState extends State<Home> {
           showModalBottomSheet(
             context: context,
             isScrollControlled: true,
+            backgroundColor: provider.theme == ThemeMode.light ? Colors.white : const Color(0xff141922),
             builder: (context)
           {
             return const AddTaskBottomSheet();
           },);
         },
         shape: RoundedRectangleBorder(
-          side: const BorderSide(
+          side:  BorderSide(
             width: 4,
-            color: Colors.white
+            color: provider.theme == ThemeMode.light ? Colors.white : const Color(0xff141922)
           ),
             borderRadius: BorderRadius.circular(30)
         ),
-        backgroundColor: MyThemeData.primaryColor,
+        backgroundColor: provider.theme == ThemeMode.light ? MyThemeData.primaryColor : MyThemeData.secondDarkColor,
         child: const Icon(Icons.add),
       ),
       bottomNavigationBar: BottomAppBar(
+        color: provider.theme == ThemeMode.light ? Colors.white :const Color(0xff141922),
         shape: const CircularNotchedRectangle(),
         notchMargin: 8,
         padding: EdgeInsets.zero,
         child: BottomNavigationBar(
-          backgroundColor: Colors.transparent,
           elevation: 0,
           currentIndex: index,
           onTap: (int value){
@@ -82,5 +83,5 @@ class _HomeState extends State<Home> {
       body: screens[index],
     );
   }
-  List<Widget> screens= [ const TaskScreen(),const SettingsScreen()];
+  List<Widget> screens= [ const TaskScreen(), const SettingsScreen()];
 }

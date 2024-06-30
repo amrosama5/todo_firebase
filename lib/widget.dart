@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'my_theme_data.dart';
 
+
 Widget customTextField(
     {required controller,
     required keyboardType,
@@ -17,8 +18,7 @@ Widget customTextField(
         label,
         style: Theme.of(context)
             .textTheme
-            .bodyMedium!
-            .copyWith(color: Colors.black),
+            .bodyMedium!,
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),

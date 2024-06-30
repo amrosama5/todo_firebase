@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app_firebase/my_theme_data.dart';
 import 'package:todo_app_firebase/firebase/firebase_function.dart';
 import 'package:todo_app_firebase/home/edit_screen.dart';
-import 'package:todo_app_firebase/task_model.dart';
+import 'package:todo_app_firebase/models/task_model.dart';
+import 'package:todo_app_firebase/provider/my_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TaskItem extends StatefulWidget {
   final TaskModel taskModel;
@@ -14,14 +17,16 @@ class TaskItem extends StatefulWidget {
 }
 
 class _TaskItemState extends State<TaskItem> {
+
   @override
   Widget build(BuildContext context) {
+    var pro  =  Provider.of<MyProvider>(context);
     return Container(
       padding: const EdgeInsets.all(12.0),
       margin: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        color: Colors.white,
+        color: pro.theme == ThemeMode.light ? Colors.white : const Color(0xff141922),
       ),
       child: Slidable(
         startActionPane: ActionPane(motion: const DrawerMotion(), children: [
@@ -29,7 +34,7 @@ class _TaskItemState extends State<TaskItem> {
             onPressed: (context) {
               FirebaseFunction.deleteTask(widget.taskModel.id);
             },
-            label: "Delete",
+            label: AppLocalizations.of(context)!.delete,
             flex: 1,
             backgroundColor: Colors.red,
             autoClose: true,
@@ -45,7 +50,7 @@ class _TaskItemState extends State<TaskItem> {
             onPressed: (context) {
               Navigator.pushNamed(context, EditScreen.routeName,arguments: widget.taskModel);
             },
-            label: "Edit",
+            label: AppLocalizations.of(context)!.edit,
             backgroundColor: Colors.blue,
             autoClose: true,
             icon: Icons.delete_forever,
@@ -109,7 +114,7 @@ class _TaskItemState extends State<TaskItem> {
                     color: MyThemeData.primaryColor,
                     size: 30,
                   )
-                ) : const Text("Done!",style: TextStyle(color: Colors.green),),
+                ) : Text(AppLocalizations.of(context)!.done,style: const TextStyle(color: Colors.green),),
               ),
             ],
           ),

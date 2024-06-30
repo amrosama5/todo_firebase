@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app_firebase/firebase/firebase_function.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../widget.dart';
 
@@ -27,10 +28,10 @@ class Register extends StatelessWidget {
               customTextField(
                   context: context,
                   controller: nameController,
-                  label: "Name",
+                  label: AppLocalizations.of(context)!.name,
                   validator: (value){
                     if(nameController.text.isEmpty){
-                      return "Name must not be empty";
+                      return AppLocalizations.of(context)!.nameMustNotBeEmpty;
                     }
                     return null;
                   },
@@ -42,10 +43,10 @@ class Register extends StatelessWidget {
               customTextField(
                   context: context,
                   controller: phoneController,
-                  label: "Phone",
+                  label: AppLocalizations.of(context)!.phone,
                   validator: (value){
                     if(phoneController.text.isEmpty){
-                      return "Phone must not be empty";
+                      return AppLocalizations.of(context)!.phoneMustNotBeEmpty;
                     }
                     return null;
                   },
@@ -57,10 +58,16 @@ class Register extends StatelessWidget {
               customTextField(
                   context: context,
                   controller: emailController,
-                  label: "Email",
+                  label: AppLocalizations.of(context)!.email,
                   validator: (value){
+                    final bool emailValid =
+                    RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                        .hasMatch(value);
+                    if(!emailValid){
+                      return AppLocalizations.of(context)!.emailValid;
+                    }
                     if(emailController.text.isEmpty){
-                      return "Email must not be empty";
+                      return AppLocalizations.of(context)!.emailMustNotBeEmpty;
                     }
                     return null;
                   },
@@ -72,10 +79,13 @@ class Register extends StatelessWidget {
               customTextField(
                   context: context,
                   controller: passwordController,
-                  label: "Password",
+                  label: AppLocalizations.of(context)!.password,
                   validator: (value){
+                    if(passwordController.text.length < 6){
+                      return AppLocalizations.of(context)!.passwordMustAtLeast6Char;
+                    }
                     if(passwordController.text.isEmpty){
-                      return "Password must not be empty";
+                      return AppLocalizations.of(context)!.passwordMustNotBeEmpty;
                     }
                     return null;
                   },
@@ -88,6 +98,7 @@ class Register extends StatelessWidget {
                   onPressed: (){
                     if(formKey.currentState!.validate()){
                      FirebaseFunction.createAccount(
+                       context: context,
                          emailAddress: emailController.text,
                          password: passwordController.text,
                          name: nameController.text,
@@ -96,12 +107,12 @@ class Register extends StatelessWidget {
                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error),backgroundColor: Colors.red,));
                          },
                          onSuccess: (){
-                         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Done"),backgroundColor: Colors.green,));
+                         ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text(AppLocalizations.of(context)!.doneCreate),backgroundColor: Colors.green,));
                        }
                      );
                     }
                   },
-                  text: "Register"
+                  text: AppLocalizations.of(context)!.register
               )
             ],
           ),
