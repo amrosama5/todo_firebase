@@ -27,7 +27,7 @@
   "userNotFound": "لم يتم العثور علي المستخدم لهذا البريد",
   "wrongPassword": "كلمة السر خظأ",
   "error": "خطأ",
-  "verifyEmail": "من فضلك قم بتاكيد الحساب",
+  "verifyEmail": "من فضلك قم بتاكيد الحساب عبر البريد الالكتروني",
   "emailValid": "البريد الالكتروني غير صحيح",
   "passwordMustAtLeast6Char": "يجب كلمة السر تكون علي الاقل 6 احرف",
   "passwordMustNotBeEmpty": "يجب وضع كلمة السر",

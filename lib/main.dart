@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
       darkTheme: MyThemeData.darkTheme,
       themeMode: provider.theme,
       locale: Locale(provider.langCode),
-      initialRoute: provider.firebaseUser != null ? Home.routeName : Auth.routeName,
+      initialRoute: provider.firebaseUser != null && provider.firebaseUser!.emailVerified == true ? Home.routeName : Auth.routeName,
       routes: {
         Home.routeName: (context) => const Home(),
         EditScreen.routeName: (context) => const EditScreen(),

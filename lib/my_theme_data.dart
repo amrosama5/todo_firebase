@@ -11,12 +11,12 @@ class  MyThemeData{
       bodyLarge: GoogleFonts.poppins(
         fontWeight: FontWeight.bold,
         fontSize: 25,
-        color: secondColor
+        color: Colors.black
       ),
       bodyMedium: GoogleFonts.poppins(
           fontWeight: FontWeight.w600,
           fontSize: 20,
-          color: Colors.black
+          color: Colors.white
       ),
       bodySmall:  GoogleFonts.poppins(
           fontWeight: FontWeight.w400,

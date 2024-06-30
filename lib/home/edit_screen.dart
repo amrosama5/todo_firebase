@@ -54,7 +54,7 @@ class _EditScreenState extends State<EditScreen> {
                       label: AppLocalizations.of(context)!.title,
                       validator: (value){
                         if(titleController.text.isEmpty){
-                          return AppLocalizations.of(context)!.title;
+                          return AppLocalizations.of(context)!.titleMustNotBeEmpty;
                         }
                       }
                   ),

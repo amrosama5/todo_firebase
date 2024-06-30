@@ -16,9 +16,6 @@ Widget customTextField(
     decoration: InputDecoration(
       label: Text(
         label,
-        style: Theme.of(context)
-            .textTheme
-            .bodyMedium!,
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),

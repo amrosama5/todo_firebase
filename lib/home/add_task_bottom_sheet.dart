@@ -66,7 +66,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                     label: AppLocalizations.of(context)!.description,
                     validator: (value) {
                       if (descController.text.isEmpty) {
-                        return AppLocalizations.of(context)!.description;
+                        return AppLocalizations.of(context)!.descriptionMustNotBeEmpty;
                       }
                       return null;
                     }),
@@ -96,7 +96,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                   height: 26,
                 ),
                 customButton(
-                  text: AppLocalizations.of(context)!.description,
+                  text: AppLocalizations.of(context)!.addTask,
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
                       FirebaseFunction.addTask(

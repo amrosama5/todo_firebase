@@ -122,7 +122,12 @@ class FirebaseFunction{
           email: emailAddress,
           password: password
       ).then((e){
-        onSuccess();
+        if(FirebaseAuth.instance.currentUser?.emailVerified == true){
+          onSuccess();
+        }else{
+          onError(AppLocalizations.of(context)!.verifyEmail);
+        }
+
       });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
